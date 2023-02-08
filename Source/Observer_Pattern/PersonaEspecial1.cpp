@@ -27,18 +27,17 @@ void APersonaEspecial1::Tick(float DeltaTime)
 
 }
 
-void APersonaEspecial1::Destroyed()
+void APersonaEspecial1::EstablecerTorreDelReloj(ATorreDelReloj* _TorreDelReloj)
 {
-	Super::Destroyed();
+    //Registrar error si la Torre del Reloj pasada es NULL
+    if (!_TorreDelReloj) {
+        UE_LOG(LogTemp, Error, TEXT("EstablecerTorreDelReloj(): _ToreeDelReloj es NULL, asegurese de que este inicializado."));
+        return;
+    }
 
-	//Log Error si su TorredelReloj es NULL
-	if (!TorreDelReloj) {
-		UE_LOG(LogTemp, Error, TEXT("Destroyed(): TorreDelReloj es NULL, asegurese de que este inicializado." )); 
-		return; 
-	}
-
-	//Darse de baja de la Torre del Reloj si se destruye
-	TorreDelReloj->CancelarSuscripcion(this);
+    //Establecer la TorreDelReloj y Suscribirse a ella
+    TorreDelReloj = _TorreDelReloj;
+    TorreDelReloj->Suscribirse(this);
 
 }
 
@@ -77,21 +76,20 @@ void APersonaEspecial1::Transformar()
     }
 }
 
-void APersonaEspecial1::EstablecerTorreDelReloj(ATorreDelReloj* _TorreDelReloj)
+void APersonaEspecial1::Destroyed()
 {
-    //Registrar error si la Torre del Reloj pasada es NULL
-    if (!_TorreDelReloj) {
-        UE_LOG(LogTemp, Error, TEXT("EstablecerTorreDelReloj(): _ToreeDelReloj es NULL, asegurese de que este inicializado."));
+    Super::Destroyed();
+
+    //Log Error si su TorredelReloj es NULL
+    if (!TorreDelReloj) {
+        UE_LOG(LogTemp, Error, TEXT("Destroyed(): TorreDelReloj es NULL, asegurese de que este inicializado."));
         return;
     }
 
-    //Establecer la TorreDelReloj y Suscribirse a ella
-    TorreDelReloj = _TorreDelReloj;
-    TorreDelReloj->Suscribirse(this);
+    //Darse de baja de la Torre del Reloj si se destruye
+    TorreDelReloj->CancelarSuscripcion(this);
 
 }
-
-
     
 
 

@@ -29,8 +29,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-	//Cuando se destruye este suscriptor, se cancela su suscripción a la torre del reloj.
-	virtual void Destroyed() override;
+	//Estableciendo la torre del reloj para este suscriptor
+	void EstablecerTorreDelReloj(ATorreDelReloj* _TorreDelReloj);
 
 	//Llamado cuando la Editorial cambia su estado, se ejecutara la rutina del suscriptor
 	void Actualizacion(class APublicador* _Publicador) override;
@@ -38,7 +38,7 @@ public:
 	//Ejecutando la rutina de este suscriptor
 	void Transformar() override;
 
-	//Estableciendo la torre del reloj para este suscriptor
-	void EstablecerTorreDelReloj(ATorreDelReloj* _TorreDelReloj);
+	//Cuando se destruye este suscriptor, se cancela su suscripción a la torre del reloj.
+	virtual void Destroyed() override;
 
 };
